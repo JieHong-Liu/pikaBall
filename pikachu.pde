@@ -6,6 +6,7 @@ float ballVx= 0, ballVy = 10;
 Gif Player1, Player2, p1Jump,p2Jump;
 float player1X = 0, player1Y = 700,player1V=0;
 float player2X =1600,player2Y=700,player2V =0;
+int p1Score = 0, p2Score = 0;
 int up1 = 0, down1 = 0, left1 = 0, right1 = 0;
 int up2 = 0, down2 = 0, left2 = 0 , right2 = 0;
 int die = 0;
@@ -56,7 +57,7 @@ void draw()
         if(ballY > 450 && ballY <= 550)
         {
            ballVy = -ballVy; // let the y be the negative direction.
-           ballVx = -ballVx;  
+           ballVx = ballVx;  
         }
         else if (ballY > 550)
         {
@@ -120,8 +121,13 @@ void draw()
     
     if(ballY > 800)
     {
-      //update();
+      update();
     }
+    
+    // record score
+    
+    fill(255,0,0); textSize(100);text(p1Score,100,150);
+    fill(255,0,0); textSize(100);text(p2Score,1600,150);
     
     if(dist(player1X,player1Y,ballX,ballY) < 150)
     {
@@ -140,6 +146,8 @@ void draw()
        ballVx = dir.x;
        ballVy = dir.y;
     }
+    
+    
 }
 
 void keyPressed()
@@ -167,6 +175,14 @@ void keyReleased()
 
 void update()
 {
+   if(ballX < 920)
+   {
+      p2Score ++;
+   }
+   else
+   {
+      p1Score ++; 
+   }
    ballX = 50; ballY = 0;
    ballVx= 0; ballVy = 10;
    player1X = 0; player1Y = 700;player1V=0;
