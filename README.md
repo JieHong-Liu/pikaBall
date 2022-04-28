@@ -2,9 +2,7 @@
 
 ## 介紹
 
-![](https://i.imgur.com/yheydWQ.jpg)
-
-
+![](https://i.imgur.com/mz8puxc.jpg)
 
 ---
 ## 小插曲
