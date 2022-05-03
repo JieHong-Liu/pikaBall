@@ -7,8 +7,7 @@
 
 [2] 4/30 增加了殺球的功能。
 
-[3] 5/3 增加了進場畫面，WIN POSE AND LOSE POSE，但是遊戲仍然會繼續
--> 下次更新應該會將整個遊戲引入FSM的概念，將遊戲分成N個state (包括進入遊戲，開始遊戲，等等)
+[3] 5/3 增加了進場畫面，WIN POSE AND LOSE POSE，並將整個遊戲引入FSM的概念，將遊戲分成3個state (包括進入遊戲，開始遊戲，遊戲結束)，增加殺球GIF
 
 
 
@@ -29,7 +28,7 @@
 
 
 ### 遊戲結束
-![](https://i.imgur.com/vJp5h8G.jpg)
+![](https://i.imgur.com/YumWBws.jpg)
 
 ---
 ## 小插曲
