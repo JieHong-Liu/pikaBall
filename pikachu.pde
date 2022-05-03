@@ -1,6 +1,6 @@
 import gifAnimation.*;
 import java.util.*;
-PImage BGimg, net;
+PImage entryBG,BGimg, net;
 Gif ball;
 float ballX =50, ballY = 0;
 float ballVx= 0, ballVy = 10;
@@ -15,14 +15,14 @@ int die = 0;
 boolean ballKill = false;
 boolean gameEnd = false, p1Win = false, p2Win = false;
 int whoballhit = 0;
-
+boolean entry = false;
 
 
 void setup()
 {
-    die = 0;
     size(1800,900);
     BGimg = loadImage("images/background.jpg");
+    entryBG = loadImage("images/ok_entry_background.jpg");
     net = loadImage("images/net.PNG");
     ball = new Gif(this, "images/pokeball.gif");
     killBall1 = new Gif(this, "images/thunder-ball-unscreen.gif");
@@ -47,6 +47,15 @@ void setup()
 
 void draw()
 {
+    if(entry == false)
+    {
+        background(entryBG);
+        fill(255,0,0); textSize(75); text("Final Project of",500,300);
+        fill(255,0,0); textSize(50); text("Design-of-Embedded-Microprocessor-Systems",400,450);
+        fill(0,0,255); textSize(50); text("Press P to Start Game",500,750);  
+    }
+  else
+  {
     background(BGimg);
     image(net,900,550,40,350);
     if(ballKill == true){
@@ -196,7 +205,7 @@ void draw()
        if(power2 != 15) {ballKill = true; whoballhit = 2;}
        else{ballKill =false; whoballhit = 0; }  
   }
-    
+  }
     
 }
 
@@ -212,6 +221,7 @@ void keyPressed()
   if(keyCode == 'S'){down1 = 1;}
   if(keyCode == 'A'){left1 = 1;}
   if(keyCode == 'B'){ power1 = 30;}
+  if(keyCode == 'P'){entry = true;}
 }
 void keyReleased()
 {
@@ -225,7 +235,7 @@ void keyReleased()
   if(keyCode == 'S'){down1 = 0;}
   if(keyCode == 'A'){left1 = 0;}
   if(keyCode == 'B'){power1 = 15;}
-
+  if(keyCode == 'P'){}
 }
 
 void update()
