@@ -1,9 +1,10 @@
 import gifAnimation.*;
+import java.util.*;
 PImage BGimg, net;
 Gif ball;
 float ballX =50, ballY = 0;
 float ballVx= 0, ballVy = 10;
-Gif Player1, Player2, p1Jump,p2Jump,killBall1,killBall2;
+Gif Player1, Player2, p1Jump,p2Jump,killBall1,killBall2,winPose,losePose;
 float player1X = 0, player1Y = 700,player1V=0;
 float player2X =1600,player2Y=700,player2V =0;
 int p1Score = 0, p2Score = 0;
@@ -12,7 +13,11 @@ int up2 = 0, down2 = 0, left2 = 0 , right2 = 0;
 int power1 = 15, power2 = 15;
 int die = 0;
 boolean ballKill = false;
+boolean gameEnd = false, p1Win = false, p2Win = false;
 int whoballhit = 0;
+
+
+
 void setup()
 {
     die = 0;
@@ -26,7 +31,8 @@ void setup()
     Player2 = new Gif(this, "images/pikawalk2-unscreen.gif");
     p1Jump = new Gif(this, "images/pikajump1-unscreen.gif");
     p2Jump = new Gif(this, "images/pikajump2-unscreen.gif");
-    
+    winPose = new Gif(this,"images/pikaWin.gif");
+    losePose = new Gif(this,"images/pikaLose.gif");
     // let the gif loop
     ball.loop();
     Player1.loop();
@@ -35,6 +41,8 @@ void setup()
     p2Jump.loop();
     killBall1.loop();
     killBall2.loop();
+    winPose.loop();
+    losePose.loop();
 }
 
 void draw()
@@ -142,7 +150,24 @@ void draw()
         
     if(ballY > 800)
     {
-      update();
+       update();
+    }
+    
+    // Game over
+    
+    if(gameEnd == true)
+    {
+      if(p1Win == true)
+      {
+        image(winPose,player1X,player1Y,200,200);
+        image(losePose,player2X,player2Y,200,200); 
+      }
+      else
+      {
+         image(winPose,player2X,player2Y,200,200); 
+         image(losePose,player1X,player1Y,200,200); 
+      }
+ 
     }
     
     // record score
@@ -206,7 +231,7 @@ void keyReleased()
 void update()
 {
    ballKill = false;
-   if(ballX < 920)
+   if(ballX < 900)
    {
       p2Score ++;
    }
@@ -214,6 +239,20 @@ void update()
    {
       p1Score ++; 
    }
+   
+   if(p1Score == 3 || p2Score == 3)
+   {
+      gameEnd = true;
+      if(p1Score == 15)
+      {
+         p1Win = true; 
+      }
+      else
+      {
+         p2Win = true; 
+      }
+   }
+   
    ballX = 50; ballY = 0;
    ballVx= 0; ballVy = 10;
    player1X = 0; player1Y = 700;player1V=0;
