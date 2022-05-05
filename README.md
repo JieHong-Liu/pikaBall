@@ -9,13 +9,18 @@
 
 [3] 5/3 增加了進場畫面，WIN POSE AND LOSE POSE，並將整個遊戲引入FSM的概念，將遊戲分成3個state (包括進入遊戲，開始遊戲，遊戲結束)，增加殺球GIF
 
+[4] 5/5 修改了起始畫面，遊戲畫面；並以OOP的方式增加了雲朵特效。
 
+
+## TODO
+1. 將皮卡丘以OOP的形式改寫
+2. 將勝利與失敗的動畫去背
 
 ## 介紹
 
 ### 遊戲起始畫面
 
-![](https://i.imgur.com/aTZTikB.png)
+![](https://i.imgur.com/uoO9A25.jpg)
 
 
 ### 計分功能
@@ -27,8 +32,17 @@
 ![](https://i.imgur.com/nktW3l7.jpg)
 
 
+### 遊戲畫面
+![](https://i.imgur.com/UeW6sU7.jpg)
+
+#### 雲朵特效
+
+![](https://i.imgur.com/1r9CtiE.jpg)
+
+
 ### 遊戲結束
-![](https://i.imgur.com/YumWBws.jpg)
+
+![](https://i.imgur.com/HvohdCy.jpg)
 
 ---
 ## 小插曲
