@@ -1,6 +1,6 @@
 import gifAnimation.*;
 import java.util.*;
-PImage entryBG,BGimg, net;
+PImage entryBG,BGimg, net,mount,sky,mnt_gnd,gnd,left_bound,right_bound,gndSea,cloud;
 Gif ball;
 float ballX =50, ballY = 0;
 float ballVx= 0, ballVy = 10;
@@ -16,6 +16,9 @@ boolean ballKill = false;
 boolean p1Win = false, p2Win = false;
 int whoballhit = 0;
 
+Cloud[] clouds;
+
+
 public enum State
 {
     ENTRY, GAMING, END;
@@ -25,9 +28,18 @@ private State gameStatus = State.ENTRY;
 void setup()
 {
     size(1800,900);
-    BGimg = loadImage("images/background.jpg");
-    entryBG = loadImage("images/ok_entry_background.jpg");
+    BGimg = loadImage("images/gameBG.jpg");
+    entryBG = loadImage("images/entry_background.jpg");
+    mount = loadImage("images/ok_mount.jpg");
+    mnt_gnd = loadImage("images/ok_mnt_gnd.jpg");
+    gndSea = loadImage("images/gndSea.jpg");
+    left_bound = loadImage("images/left_bound.jpg");
+    right_bound = loadImage("images/right_bound.jpg");
+    sky = loadImage("images/ok_sky.jpg");
     net = loadImage("images/net.PNG");
+    gnd = loadImage("images/ok_gnd.jpg");
+    cloud = loadImage("images/cloud.png");
+
     ball = new Gif(this, "images/pokeball.gif");
     killBall1 = new Gif(this, "images/thunder-ball-unscreen.gif");
     killBall2 = new Gif(this,"images/thunder-ball-unscreen.gif");
@@ -51,6 +63,12 @@ void setup()
     losePose.loop();
     p1HitBall.loop();
     p2HitBall.loop();
+    
+    clouds = new Cloud[5];
+    for(int i = 0; i < 5; i ++)
+    {
+        clouds[i] =  new Cloud(random(0,1800),random(0,450)); 
+    }
 }
 
 void draw()
@@ -61,8 +79,8 @@ void draw()
       case ENTRY:
       {
          background(entryBG);
-         fill(255,0,0); textSize(75); text("Final Project of",500,300);
-         fill(255,0,0); textSize(50); text("Design-of-Embedded-Microprocessor-Systems",400,450);
+         fill(255,255,255); textSize(75); text("Final Project of",200,300);
+         fill(255,255,255); textSize(50); text("Design-of-Embedded-Microprocessor-Systems",200,450);
          fill(0,0,255); textSize(50); text("Press P to Start Game",500,750);
          initialParameter();
          break;
@@ -70,7 +88,10 @@ void draw()
       case GAMING:
       {
           background(BGimg);
-          image(net,900,550,40,350);
+          for(int i = 0 ; i< 5; i++)
+          {
+             clouds[i].update(); 
+          }
           if(ballKill == true)
           {
               if(whoballhit == 1)
@@ -117,6 +138,7 @@ void draw()
             
           }
           
+ 
           // draw player 1 and player2
           if(hit1 == 1){image(p1HitBall,player1X,player1Y,200,200);}
           else if(player1Y != 700){image(p1Jump,player1X,player1Y,200,200);} // do jump operation
@@ -169,7 +191,6 @@ void draw()
           else if(player2X >= 1600) {player2X = 1600;}
 
           // record score
-          
           fill(255,0,0); textSize(100);text(p1Score,100,150);
           fill(255,0,0); textSize(100);text(p2Score,1600,150);
           
@@ -200,11 +221,17 @@ void draw()
           {
              update();
           }
-          
+   
           break;
       }
       case END:
       {
+        
+        // final screen
+        background(BGimg);
+        fill(255,0,0); textSize(100);text(p1Score,100,150);  
+        fill(255,0,0); textSize(100);text(p2Score,1600,150);
+          
         // Game over
         if(p1Score == 3)
         {
@@ -311,4 +338,53 @@ void initialParameter()
     player1X = 0; player1Y = 700;player1V=0;
     player2X = 1600;player2Y=700;player2V =0;
     p1Score = 0; p2Score = 0;
+}
+
+void drawBackGround()
+{
+    for(int i = 0 ; i< 1800; i+=50)
+    {
+       for(int j = 0 ; j < 550 ; j+=50)
+       {
+          image(sky,i,j); 
+       }
+    }
+    image(mount,0,550);
+    
+    for(int i = 0 ; i < 1800; i+=50)
+    {
+       image(mnt_gnd,i,750); 
+    }
+    
+    image(left_bound,0,800);
+    image(right_bound,1700,800);
+    for(int i = 100 ; i < 1700; i+=100) // draw line and ground 
+    {
+       image(gnd,i,800); 
+    }
+    for(int i = 0 ; i < 1800; i+=100)
+    {
+       image(gndSea,i,850); 
+    }
+    image(net,900,550,40,275);
+}
+
+
+class Cloud
+{
+    float x,y;
+    // constructor
+    Cloud(float x1,float y1 )
+    {
+        x = x1;
+        y = y1;
+    }
+    void update()
+    {
+        float speed = 10;
+        x = x + speed;
+        if(x >= 1800) x = 0;
+        image(cloud,x,y);     
+    }
+  
 }
