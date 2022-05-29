@@ -1,3 +1,6 @@
+import processing.serial.*;
+Serial serial;
+
 import gifAnimation.*;
 import java.util.*;
 PImage entryBG,BGimg, net,mount,sky,mnt_gnd,gnd,left_bound,right_bound,gndSea,cloud;
@@ -27,6 +30,7 @@ private State gameStatus = State.ENTRY;
 
 void setup()
 {
+    serial = new Serial(this,"COM3",9600);
     size(1800,900);
     BGimg = loadImage("images/gameBG.jpg");
     entryBG = loadImage("images/entry_background.jpg");
@@ -41,6 +45,7 @@ void setup()
     cloud = loadImage("images/cloud.png");
 
     ball = new Gif(this, "images/pokeball.gif");
+    //ball = new Gif (this,"images/pin.gif");
     killBall1 = new Gif(this, "images/thunder-ball-unscreen.gif");
     killBall2 = new Gif(this,"images/thunder-ball-unscreen.gif");
     p1HitBall = new Gif(this,"images/pikahit1-unscreen.gif");
@@ -138,7 +143,8 @@ void draw()
             
           }
           
- 
+         buttonCtrl();
+
           // draw player 1 and player2
           if(hit1 == 1){image(p1HitBall,player1X,player1Y,200,200);}
           else if(player1Y != 700){image(p1Jump,player1X,player1Y,200,200);} // do jump operation
@@ -387,4 +393,45 @@ class Cloud
         image(cloud,x,y);     
     }
   
+}
+
+void buttonCtrl()
+{
+  if(serial.available() > 0)
+  {
+      int serialData = serial.read();
+      if(serialData == 60) // right signal
+      {
+         right1 = 1;
+      }
+      else if (serialData == 65)
+      {
+         right1 = 0; 
+      }
+      
+      if (serialData == 40)
+      {
+         left1 = 1;
+      }
+      else if (serialData == 45)
+      {
+         left1 = 0; 
+      }
+      
+      if (serialData == 50)
+      {
+         if(player1Y == 700){player1V = -30;}
+      }
+      
+      if(serialData == 70)
+      {
+         hit1 = 1; power1 = 30; 
+      }
+      else if (serialData == 75)
+      {
+         hit1 = 0;power1 = 15;
+      }
+
+  }
+ 
 }
